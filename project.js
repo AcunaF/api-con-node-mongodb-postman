@@ -1,11 +1,46 @@
-//configuracion de rutas del controlador projections
+//un controlador es una clase que tiene una serie de metodos relacionados con el proyecto
 
-var express = require('express');
-var ProjectController = require('../Controladores/project');
-var router = express.Router();
+const { send } = require("express/lib/response");
+let Project = require("../Modelo/Project");
 
-router.get('/home', ProjectController.home); //accedo al metodo home del archivo project de la carpeta controladores
-router.post('/test', ProjectController.test); //accedo al metodo test del archivo project de la carpeta controladores
-router.post('/save', ProjectController.save); //accedo al metodo test del archivo project de la carpeta controladores
+var controller ={
 
-module.exports = router;
+    home:function(req, res){
+        return res.status(200).send({
+                
+        });
+
+    },
+
+    test: function (req, res){
+        return res.status(200).send({
+
+         message: 'soy el metodo test'
+        });
+    },
+
+    save: function (req, res){
+
+        let project = new Project();
+        
+        var params = req.body;
+        project.name = params.name;
+        project.description = params.description;
+        project.category = params.category;
+        project.year = params.year;
+        project.langs = params.langs;
+        project.image=null;
+
+        return res.status(200).send({
+            params: params,
+            message: 'soy el metodo save project'
+
+        });
+
+
+    }
+};
+
+
+
+module.exports = controller;
